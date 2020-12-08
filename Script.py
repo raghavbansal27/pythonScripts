@@ -1,7 +1,9 @@
 import os
 import re
 from datetime import date
-curr_dir="GNE/Mech/Academics/"
+base_dir = os.path.dirname(os.path.realpath(__file__))
+md_dir="GNE/Mech/Academics/"
+curr_dir = os.path.abspath(os.path.join(base_dir, md_dir))
 regex = re.compile(r'\d+')
 
 heading=str(input("Enter the Notice Heading:- "))
