@@ -1,24 +1,26 @@
 import os
+import re
 from datetime import date
 curr_dir="GNE/Mech/Academics/"
-i=1
+regex = re.compile(r'\d+')
 
 heading=str(input("Enter the Notice Heading:- "))
 
 pre=''
+for file in os.listdir(curr_dir):
+    if file.endswith(".md"):
+        path = os.path.join(curr_dir, file)
+if os.path.isfile(path):
+    file_number = regex.findall(path)
+    file_number = int(file_number[0])
 
-if os.path.isfile("GNE/Mech/Academics/noticeX.md"):
-    file=open("GNE/Mech/Academics/noticeX.md","r")
-    pre=file.read()
-    file.seek(0,0)
-    line=file.readlines()
-    i=int(line[2][16:])
+    new_path = "GNE/Mech/Academics/notice" + str(file_number + 1) + ".md"
+    os.rename(path,new_path)
+    file_number+=1
+    file=open(new_path,"a")
+    file.write("## "+heading+"\nDate : "+str(date.today())+"  \nNotice Number : "+str(file_number)+"\n"+pre)
+    file.flush()
     file.close()
-    os.rename(os.path.join(curr_dir,str(i)),os.path.join(curr_dir,str(i+1)))
-    i+=1
+    print("Notice added successfully!")
 else:
-    os.mkdir(os.path.join(curr_dir,str(i)))
-file=open("GNE/Mech/Academics/noticeX.md","w")
-file.write("## "+heading+"\nDate : "+str(date.today())+"  \nNotice Number : "+str(i)+"\n"+pre)
-file.flush()
-file.close()
+    print("File not found")
